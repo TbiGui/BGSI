@@ -1,0 +1,51 @@
+local request = http_request or request or (http and http.request) or syn and syn.request
+local HttpService = game:GetService("HttpService")
+
+local function sendEmbed(Webhook, username, TotalEggs, Eggs, TotalCoins, Coins, TotalGems, Gems, TotalBubbles, Bubbles, TotalPlaytime, Playtime, TotalPets, Pets)
+	local data = {
+		content = "",
+		embeds = {{
+			title = "🫧🍭 Bubble Gum Simulator Infinity - Live Tracker",
+			description = "📊 Tracker",
+			color = 0x00ffcc,
+			thumbnail = { url = "https://i.imgur.com/AKSSzv3.png" },
+			fields = {
+				{ name = "👤 Username:", value = "||" .. username .. "||", inline = false },
+				{ name = "🍳 Total Eggs opened:", value = "```" .. TotalEggs .. "```", inline = true },
+				{ name = "🥚 Eggs opened:", value = "```" .. Eggs .. "```", inline = true },
+				{ name = " ", value = "‎", inline = false },
+
+				{ name = "💰 Total Coins:", value = "```" .. TotalCoins .. "```", inline = true },
+				{ name = "🪙 Coins farmed:", value = "```" .. Coins .. "```", inline = true },
+				{ name = " ", value = "‎", inline = false },
+
+				{ name = "💍 Total Gems:", value = "```" .. TotalGems .. "```", inline = true },
+				{ name = "💎 Gems farmed:", value = "```" .. Gems .. "```", inline = true },
+				{ name = " ", value = "‎", inline = false },
+
+				{ name = "🫧 Total Bubbles:", value = "```" .. TotalBubbles .. "```", inline = true },
+				{ name = "🍭 Bubbles farmed:", value = "```" .. Bubbles .. "```", inline = true },
+				{ name = " ", value = "‎", inline = false },
+
+				{ name = "⏱️ Total Playtime:", value = "```" .. TotalPlaytime .. "```", inline = true },
+				{ name = "🕒 Current playtime:", value = "```" .. Playtime .. "```", inline = true },
+				{ name = " ", value = "‎", inline = false },
+
+				{ name = "🐾 Total Pets:", value = "```" .. TotalPets .. "```", inline = true },
+				{ name = "🐶 New pets:", value = "```" .. Pets .. "```", inline = true }
+			},
+
+			footer = {
+				text = "Last updated: " .. os.date("%m/%d/%Y - %H:%M:%S"),
+				icon_url = "https://i.imgur.com/AKSSzv3.png"
+			}
+		}}
+	}
+
+	local result = request({
+		Url = Webhook,
+		Method = "POST",
+		Headers = { ["Content-Type"] = "application/json" },
+		Body = HttpService:JSONEncode(data)
+	})
+end
